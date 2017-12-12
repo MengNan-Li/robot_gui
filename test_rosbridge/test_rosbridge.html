@@ -4,14 +4,10 @@
 <head>
   <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=0.65, user-scalable=yes">
-
-  <title>Rosbridge Simple GUI</title>
-
+  <title>test_rosbridge</title>
   <script type="text/javascript" src="js/eventemitter2.min.js"></script>
-  <script type="text/javascript" src="js/mjpegcanvas.min.js"></script>
   <script type="text/javascript" src="js/roslib.min.js"></script>
-  <script type="text/javascript" src="js/simple_gui.js"></script>
-
+  <script type="text/javascript" src="js/test_rosbridge.js"></script>
   <script type="text/javascript">
     function init() {
       var readyStateCheckInterval = setInterval(function () {
@@ -22,32 +18,10 @@
       }, 100);
     }
   </script>
-
-  <style type="text/css">
-    body,
-    input {
-      font-family: sans-serif narrow;
-      font-size: 14pt;
-    }
-
-    .checkbox {
-      width: 20px;
-      height: 20px;
-    }
-
-    table,
-    tr,
-    td,
-    th {
-      text-align: center;
-      white-space: nowrap;
-    }
-  </style>
 </head>
 
 <body onload="init();init_ros();">
-
-  <form name="simple_gui" method="get" action="./">
+  <form name="test_rosbridge" method="get" action="./">
 
     <table width="100%" cellpadding="2" cellspacing="2" style="border: 1px solid;">
       <tbody>
@@ -70,14 +44,6 @@
                   </td>
                 </tr>
 
-                <!-- *** Table Row 2: Display the video image -->
-                <tr>
-                  <td colspan="2" width="100%">
-                    <div id="videoCanvas" style="display: block;"></div>
-                    <br/>
-                  </td>
-                </tr>
-
                 <!-- *** Table Row 3: Publish a message on the /chatter topic  -->
                 <tr>
                   <td>
@@ -87,8 +53,7 @@
                           <input id="chatterToggle" type="checkbox" class="checkbox" onClick="toggleChatter();">
                         </td>
                         <td style="vertical-align: top; text-align: left;">&nbsp;Topic:&nbsp;/chatter &nbsp;&nbsp;Message:&nbsp;
-                          <input type="text" size="30" id="chatterMessage"
-                            value="Greetings Humans!" onInput="updateChatterMsg(this.value);">
+                          <input type="text" size="30" id="chatterMessage" value="Greetings Humans!" onInput="updateChatterMsg(this.value);">
                         </td>
                       </tr>
 
@@ -98,8 +63,7 @@
                           <input id="chatterSub" type="checkbox" class="checkbox" onClick="subChatter();">
                         </td>
                         <td style="vertical-align: top; text-align: left;">&nbsp;Topic:&nbsp;/chatter&nbsp;&nbsp; Message:&nbsp;
-                          <input readonly="readonly" type="text" size="30"
-                            id="chatterData">
+                          <input readonly="readonly" type="text" size="30" id="chatterData">
                         </td>
                       </tr>
 
@@ -125,86 +89,31 @@
                     </table>
                   </td>
                 </tr>
+
               </tbody>
             </table>
           </td>
 
           <!-- ===== Right Panel ===== -->
           <td valign="top" border="1">
-            <h2>ROS Remote Control</h2>
+            <h2>LMN</h2>
             <table width="100%" border="0" cellpadding="0" cellspacing="0">
-              <tbody>
-                <tr valign="top">
-                  <td colspan="3">
-                    <label id="cmdVelStatusMessage"></label>
-                    <br>
-                    <br>
-                    <b>
-                      <label id="navInstructions"></label>
-                    </b>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="3" style="text-align: center;">
-                    <img src="images/arrow-up.jpg" id="arrow_up" width="100" onTouchEnd="timedStopRobot();" onTouchStart="setSpeed('forward');clearTimedStop();"
-                      onClick="setSpeed('forward');" alt="" align="middle">
-                  </td>
-                </tr>
-                <tr>
-                  <td width="33%" style="text-align: center;">
-                    <img src="images/arrow-left.jpg" width="100" onTouchEnd="timedStopRobot();" onTouchStart="setSpeed('left');clearTimedStop();"
-                      onClick="setSpeed('left');" alt="" align="middle">
-                  </td>
-                  <td width="33%" style="text-align: center;">
-                    <img src="images/stop.jpg" width="100" onClick="stopRobot('forward');" alt="" align="middle">
-                  </td>
-                  <td width="33%" style="text-align: center;">
-                    <img src="images/arrow-right.jpg" width="100" onTouchEnd="timedStopRobot();" onTouchStart="setSpeed('right');clearTimedStop();"
-                      onClick="setSpeed('right');" alt="" align="middle">
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="3" style="text-align: center;">
-                    <img src="images/arrow-down.jpg" width="100" onTouchEnd="timedStopRobot();" onTouchStart="setSpeed('backward');clearTimedStop();"
-                      onClick="setSpeed('backward');" alt="" align="middle">
-                  </td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <span style="font-size: 14pt;">Max Linear Spd:</span>
-                  </td>
-                  <td>
-                    <input type="range" id="maxLinearSpeed" min="0.01" max="0.5" step="0.01" value="0.2" onChange="writeStatusMessage('maxLinearSpeedDisplay', this.value);"
-                      onMouseUp="setMaxLinearSpeed(this.value);" onInput="maxLinearSpeedDisplay.value=this.value;">
-                  </td>
-                  <td>
-                    <span style="font-weight: bold;">
-                      <output id="maxLinearSpeedDisplay" size="4"></output>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <span style="font-size: 14pt;">Max Angular Spd:</span>
-                  </td>
-                  <td>
-                    <input type="range" id="maxAngularSpeed" min="0.01" max="2.0" step="0.01" value="1.0" onChange="writeStatusMessage('maxAngularSpeedDisplay', this.value);"
-                      onMouseUp="setMaxAngularSpeed(this.value);" onInput="maxAngularSpeedDisplay.value=this.value;">
-                  </td>
-                  <td>
-                    <span style="font-weight: bold;">
-                      <output id="maxAngularSpeedDisplay" size="4"></output>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
+              <tr>
+                <td style="vertical-align: top; text-align: right;">Publish:
+                    <button type="button" onclick="publish_message()">Publish</button>
+                </td>
+                <td style="vertical-align: top; text-align: left;">&nbsp;Topic:&nbsp;/chatter &nbsp;&nbsp;Message:&nbsp;
+                  <input type="text" size="30" id="chatterMessage1" value="Greetings Humans!">
+                </td>
+              </tr>
             </table>
           </td>
+
         </tr>
       </tbody>
     </table>
-  </form>
 
+  </form>
 </body>
 
 </html>

@@ -24,6 +24,7 @@ var mjpegPort = "8080";
 
 // Get the current hostname
 thisHostName = document.location.hostname;
+thisHostName = "192.168.228.194";
 
 // Set the rosbridge and mjpeg server hostname accordingly
 var rosbridgeHost = thisHostName;
